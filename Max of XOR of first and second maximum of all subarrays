@@ -1,0 +1,42 @@
+import java.util.*;
+
+class maxXOR{
+
+static int findMaxXOR(Vector<Integer> arr, int n){
+	
+	Vector<Integer> stack = new Vector<Integer>();
+	int res = 0, l = 0, i;
+
+	for (i = 0; i < n; i++) {
+		while (!stack.isEmpty() &&
+				stack.get(stack.size()-1) < arr.get(i)) {
+			stack.remove(stack.size()-1);
+			l--;
+		}
+
+		stack.add(arr.get(i));
+		
+		l++;
+		if (l > 1) {
+			
+			res = Math.max(res,
+			stack.get(l - 1) ^ stack.get(l - 2));
+		}
+	}
+
+	return res;
+}
+
+public static void main(String[] args)
+{
+	Integer []temp = { 9, 8, 3, 5, 7 };
+	Vector<Integer> arr = new Vector<>(Arrays.asList(temp));
+	int result1 = findMaxXOR(arr, 5);
+	
+	Collections.reverse(arr);
+	
+	int result2 = findMaxXOR(arr, 5);
+	
+	System.out.print(Math.max(result1, result2));
+}
+}
